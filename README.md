@@ -38,3 +38,7 @@ Wallet that deployed: 0x3200c9E4FF0A35e8417cdEE82F659108E4663408
 ## ABI ...
 
 Remember to change the abi from the artifacts directory to the engine directory so we can interact with the contract from with the front end.
+
+## remember to change this on the Engine configuration js:
+
+the address of my actual deployed contracs

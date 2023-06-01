@@ -35,7 +35,7 @@ function MyApp({ Component, pageProps }) {
   return (
     <div style={{ background: "black" }}>
       <Navbar />
-      <NextUIProvider>
+      <NextUIProvider theme={theme}>
         <Component {...pageProps} />
       </NextUIProvider>
     </div>

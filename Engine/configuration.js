@@ -39,3 +39,5 @@ var hhrpc = "http://localhost:8545";
 Global Parameters
 */
 export var mainnet = hhrpc;
+
+// this is the the network... please look how to do it with sepolia.
