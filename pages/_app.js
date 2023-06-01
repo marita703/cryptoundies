@@ -1,16 +1,6 @@
 import { createTheme, NextUIProvider } from "@nextui-org/react";
 import "sf-font";
-import Link from "next/link";
-import react from "react";
-import Image from "next/image";
-import {
-  Spacer,
-  Button,
-  Col,
-  Row,
-  Container,
-  Dropdown,
-} from "@nextui-org/react";
+
 import Navbar from "@/Components/Navbar/Navbar.js";
 
 const theme = createTheme({

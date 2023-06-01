@@ -12,15 +12,17 @@ async function main() {
 
   const lockedAmount = hre.ethers.utils.parseEther("0.001");
 
-  const Lock = await hre.ethers.getContractFactory("Lock");
-  const lock = await Lock.deploy(unlockTime, { value: lockedAmount });
+  const NFTCollection = await hre.ethers.getContractFactory("NFTCollection");
+  const nftCollection = await NFTCollection.deploy();
 
-  await lock.deployed();
+  await nftCollection.deployed();
 
   console.log(
     `Lock with ${ethers.utils.formatEther(
       lockedAmount
-    )}ETH and unlock timestamp ${unlockTime} deployed to ${lock.address}`
+    )}ETH and unlock timestamp ${unlockTime} deployed to ${
+      nftCollection.address
+    }`
   );
 }
 
