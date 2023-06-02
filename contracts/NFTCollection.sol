@@ -1,91 +1,60 @@
-// SPDX-License-Identifier: MIT LICENSE
-
-import "@openzeppelin/contracts/access/Ownable.sol";
-import "@openzeppelin/contracts/token/ERC721/extensions/ERC721Enumerable.sol";
-
+//SPDX-License-Identifier: MIT
 pragma solidity ^0.8.18;
 
-contract NFTCollection is ERC721Enumerable, Ownable {
+import "@openzeppelin/contracts/token/ERC721/ERC721.sol"; 
+import "@openzeppelin/contracts/access/Ownable.sol";
 
-    
-    using Strings for uint256;
-    string public baseURI;
-    string public baseExtension = ".json";
-    uint256 public maxSupply = 1000;
-    uint256 public maxMintAmount = 5;
-    bool public paused = false;
+contract NFTCollection is ERC721, Ownable {
+    uint256 public mintPrice;
+    uint256 public totalSupply;
+    uint256 public maxSupply;
+    uint256 public maxPerWallet;
+    bool public isPublicMintEnabled;
+    string internal baseTokenUri;
+    address payable public withdrawWallet;
+    mapping (address => uint256) public walletMints;
 
-    constructor() ERC721("CryptoUndies", "CU") {}
+    constructor() payable ERC721('CryptoUndies', 'CU'){
+        mintPrice = 0.002 ether;
+        totalSupply = 0;
+        maxSupply = 1000;
+        maxPerWallet = 3;
+        // set withdraw wallet 
+    }
 
-
-    function _baseURI() internal view virtual override returns (string memory) {
-    return "ipfs://QmUNLLsPACCz1vLxQVkXqqLX5R1X345qqfHbsf67hvA3Nn/";
+    function setIsPublicMintedEnabled (bool isPublicMintEnabled_) external onlyOwner{
+        isPublicMintEnabled= isPublicMintEnabled_;
 
     }
-    
-    function mint(address _to, uint256 _mintAmount) public payable {
-            uint256 supply = totalSupply();
-            require(!paused);
-            require(_mintAmount > 0);
-            require(_mintAmount <= maxMintAmount);
-            require(supply + _mintAmount <= maxSupply);
+
+    function setBaseTokenUri(string calldata baseTokenUri_) external onlyOwner {
+        baseTokenUri= baseTokenUri_;
+    }
+
+    function tokenURI(uint256 tokenId_) public view override returns (string memory){
+        require (_exists(tokenId_), "Token does not exist!");
+        return string(abi.encodePacked(baseTokenUri, Strings.toString(tokenId_), ".json"));
+    }
+
+    function withdraw() external onlyOwner {
+        (bool success,) =withdrawWallet.call{ value: address(this).balance}("");
+        require(success, "withdraw failed");
+    }
+
+    function mint (uint256 quantity_) public payable {
+        require(isPublicMintEnabled, "minting not enabled");
+        require(msg.value == quantity_ * mintPrice, "wrong mint value");
+        require(totalSupply + quantity_ <= maxSupply, "sold out");
+        require(walletMints[msg.sender]+ quantity_ <= maxPerWallet, "exceed max per wallet");
+
+        for (uint256 i = 0; i <quantity_; i++) {
+            uint256 newTokenId = totalSupply +1;
+            totalSupply ++;
+            _safeMint(msg.sender, newTokenId);
             
-            for (uint256 i = 1; i <= _mintAmount; i++) {
-                _safeMint(_to, supply + i);
             }
     }
 
 
-        function walletOfOwner(address _owner)
-        public
-        view
-        returns (uint256[] memory)
-        {
-            uint256 ownerTokenCount = balanceOf(_owner);
-            uint256[] memory tokenIds = new uint256[](ownerTokenCount);
-            for (uint256 i; i < ownerTokenCount; i++) {
-                tokenIds[i] = tokenOfOwnerByIndex(_owner, i);
-            }
-            return tokenIds;
-        }
-    
-        
-        function tokenURI(uint256 tokenId)
-        public
-        view
-        virtual
-        override
-        returns (string memory) {
-            require(
-                _exists(tokenId),
-                "ERC721Metadata: URI query for nonexistent token"
-                );
-                
-                string memory currentBaseURI = _baseURI();
-                return
-                bytes(currentBaseURI).length > 0 
-                ? string(abi.encodePacked(currentBaseURI, tokenId.toString(), baseExtension))
-                : "";
-        }
-        // only owner
-        
-        function setmaxMintAmount(uint256 _newmaxMintAmount) public onlyOwner() {
-            maxMintAmount = _newmaxMintAmount;
-        }
-        
-        function setBaseURI(string memory _newBaseURI) public onlyOwner() {
-            baseURI = _newBaseURI;
-        }
-        
-        function setBaseExtension(string memory _newBaseExtension) public onlyOwner() {
-            baseExtension = _newBaseExtension;
-        }
-        
-        function pause(bool _state) public onlyOwner() {
-            paused = _state;
-        }
-        
-        function withdraw() public payable onlyOwner() {
-            require(payable(msg.sender).send(address(this).balance));
-        }
+
 }

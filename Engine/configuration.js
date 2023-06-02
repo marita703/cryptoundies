@@ -28,12 +28,21 @@ export const cipherEth = simpleCrypto.encrypt(ethraw);
 export const cipherHH = simpleCrypto.encrypt(hhraw);
 
 /*
+IPFS API DETAILS
+*/
+
+import { create as ipfsHttpClient } from "ipfs-http-client";
+export const client = ipfsHttpClient("https://ipfs.infura.io:5001/api/v0");
+
+//this is not an api key, we are not logging to infura, is just public.
+
+/*
 HardHat Testnet
 */
 
-export var hhresell = "0xD8b6521d9aeF5F30C4d0bB2709748f10c52F5318";
+export var hhresell = "0x9AA77a01931c9994B66b7767EF7023d1151e9033";
 // this is the smart contract for resale
-export var hhnftcol = "0x07Ba06b359B2F369c7CF3fA0FDdbb2F2fdb102C0";
+export var hhnftcol = "0xd153Ba2481A9249580b42C058eE81055F17A74F5";
 // this is the smart contract for Creating the NFTs.
 export var hhnft = "0x835F39489b4F74e853B36D750dDC023c49d41c5D";
 // this is the address for the custom NFT

@@ -16,9 +16,9 @@ npx hardhat run scripts/deploy.js
 
 to this contract, I changed the baseURI to a new folder that I uploaded to IPFS.. I do not know if this is correct or not, but its working until now.
 
-https://sepolia.etherscan.io/address/0x07Ba06b359B2F369c7CF3fA0FDdbb2F2fdb102C0#code
+https://sepolia.etherscan.io/address/0xd153Ba2481A9249580b42C058eE81055F17A74F5#code
 
-address: 0x07Ba06b359B2F369c7CF3fA0FDdbb2F2fdb102C0
+address: 0xd153Ba2481A9249580b42C058eE81055F17A74F5
 
 Wallet that deployed: 0x3200c9E4FF0A35e8417cdEE82F659108E4663408
 
@@ -32,7 +32,7 @@ the first address is the one of the contract to verify , and the second address 
 
 https://sepolia.etherscan.io/address/0xD8b6521d9aeF5F30C4d0bB2709748f10c52F5318#code
 
-address: 0xD8b6521d9aeF5F30C4d0bB2709748f10c52F5318
+address: 0x9AA77a01931c9994B66b7767EF7023d1151e9033
 Wallet that deployed: 0x3200c9E4FF0A35e8417cdEE82F659108E4663408
 
 ## Market
