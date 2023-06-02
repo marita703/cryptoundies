@@ -17,6 +17,7 @@ import { getWalletNFTs } from "@/Functions/Portal/getWalletNfts";
 import WalletComponent from "@/Components/WalletComponent/WalletComponent";
 import NoWalletConected from "@/Components/NoWalletConected/NoWalletConected";
 import { relistNFT } from "@/Functions/Portal/relistNFT";
+import { useRouter } from "next/router";
 
 export default function Sell() {
   //this is the wallet that is conected in metamask...
@@ -28,6 +29,8 @@ export default function Sell() {
   const [loadingState, setLoadingState] = useState("not-loaded");
   //Here we are going to store the created NFTs
   const [created, getCreated] = useState([]);
+
+  const router = useRouter();
 
   useEffect(() => {
     connectUser();
@@ -51,7 +54,11 @@ export default function Sell() {
   return (
     <div>
       <Container sm>
-        <WalletComponent />
+        <WalletComponent
+          user={user}
+          connectUser={connectUser}
+          getWalletNFTs={getWalletNFTs}
+        />
         <Row>
           <Grid.Container gap={3}>
             {/* here we are goint to start rendering the NFTs depending on the wallet that is conected */}

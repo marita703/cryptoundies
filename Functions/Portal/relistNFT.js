@@ -1,12 +1,10 @@
 import { ethers } from "ethers";
 import Web3Modal from "web3modal";
-import { useRouter } from "next/router";
+
 import NFTMarketResell from "@/Engine/NFTMarketResell.json";
 import NFTCollection from "@/Engine/NFTCollection.json";
 import "sf-font";
 import { hhresell, hhnftcol } from "@/Engine/configuration";
-
-const router = useRouter();
 
 async function relistNFT() {
   // this part queries the wallet of the user

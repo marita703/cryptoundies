@@ -2,7 +2,7 @@ import React from "react";
 
 import { Button, Col, Row, Text } from "@nextui-org/react";
 
-function WalletComponent() {
+function WalletComponent({ user, connectUser, getWalletNFTs }) {
   return (
     <Row>
       <Col>
@@ -22,7 +22,7 @@ function WalletComponent() {
           </Button>
           <Button
             size="sm"
-            onPress={getWalletNFTs(setNfts, setLoadingState)}
+            onPress={getWalletNFTs}
             css={{ marginRight: "$2", marginBottom: "$2" }}
           >
             Refresh NFTs
