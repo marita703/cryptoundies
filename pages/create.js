@@ -16,7 +16,7 @@ import {
   Text,
   Grid,
 } from "@nextui-org/react";
-import { client } from "../Engine/configuration.js";
+import { client } from "@/Engine/configuration.js";
 import "sf-font";
 import Image from "next/image";
 

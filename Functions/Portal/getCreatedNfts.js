@@ -47,7 +47,7 @@ async function getCreatedNFTs(getCreated, setLoadingState) {
             wallet: ownerW,
             desc,
           };
-          console.log(meta);
+          // console.log(meta);
           itemArray.push(meta);
         });
       });

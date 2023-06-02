@@ -5,6 +5,8 @@ import Web3Modal from "web3modal";
 import { useRouter } from "next/router";
 import NFTCollection from "../Engine/NFTCollection.json";
 import Resell from "../Engine/NFTMarketResell.json";
+import CreateCustomNFT from "../Engine/CreateCustomNFT.json";
+import Market from "../Engine/Market.json";
 import {
   Grid,
   Card,
@@ -14,19 +16,31 @@ import {
   Spacer,
   Container,
 } from "@nextui-org/react";
-import { hhresell, hhnftcol, mainnet } from "@/Engine/configuration";
+import {
+  hhnft,
+  hhmarket,
+  hhresell,
+  hhnftcol,
+  mainnet,
+} from "@/Engine/configuration";
 import { simpleCrypto, cipherEth } from "@/Engine/configuration";
 import confetti from "canvas-confetti";
 import "sf-font";
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
 import Image from "next/image";
+import { loadNewSaleNFTs } from "@/Functions/Home/loadNewSaleNFTs";
 
 export default function Home() {
   const [hhlist, hhResellNfts] = useState([]);
+  //this stores the nfts from the nft Collection that are listed for sale.
+  const [hhnfts, hhSetNfts] = useState([]);
+  //here we are going to store the nfts that someone created for sale.
+
   useEffect(() => {
     loadHardHatResell();
-  }, [hhResellNfts]);
+    loadNewSaleNFTs(hhSetNfts);
+  }, [hhResellNfts, hhSetNfts]);
 
   //this will trough confetti when people press the button.
   const handleConfetti = () => {

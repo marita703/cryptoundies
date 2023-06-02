@@ -35,7 +35,7 @@ export default function Sell() {
   useEffect(() => {
     connectUser();
     getWalletNFTs(setNfts, setLoadingState);
-    getCreatedNFTs();
+    getCreatedNFTs(getCreated, setLoadingState);
   }, [setNfts, getUser, getCreated]);
 
   async function connectUser() {
@@ -57,7 +57,7 @@ export default function Sell() {
         <WalletComponent
           user={user}
           connectUser={connectUser}
-          getWalletNFTs={getWalletNFTs}
+          getWalletNFTs={getWalletNFTs(setNfts, setLoadingState)}
         />
         <Row>
           <Grid.Container gap={3}>

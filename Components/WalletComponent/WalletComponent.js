@@ -6,7 +6,7 @@ function WalletComponent({ user, connectUser, getWalletNFTs }) {
   return (
     <Row>
       <Col>
-        <Text h4>NFTs in Wallet</Text>
+        <Text h4>NFTs in Wallet Available for Listing</Text>
         <Text h5 css={{ color: "#39FF14" }}>
           {" "}
           {user}
