@@ -15,7 +15,7 @@ import {
   Container,
 } from "@nextui-org/react";
 import { hhresell, hhnftcol, mainnet } from "@/Engine/configuration";
-import { cipherHH, simpleCrypto } from "@/Engine/configuration";
+import { cipherHH, simpleCrypto, cipherEth } from "@/Engine/configuration";
 import confetti from "canvas-confetti";
 import "sf-font";
 import Carousel from "react-multi-carousel";
@@ -36,7 +36,7 @@ export default function Home() {
 
   async function loadHardHatResell() {
     const provider = new ethers.providers.JsonRpcProvider(mainnet);
-    const key = simpleCrypto.decrypt(cipherHH);
+    const key = simpleCrypto.decrypt(cipherEth);
     const wallet = new ethers.Wallet(key, provider);
     // this is the nftsmartcontract
     const contract = new ethers.Contract(hhnftcol, NFTCollection, wallet);

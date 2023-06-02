@@ -24,6 +24,7 @@ import {
   mainnet,
   cipherHH,
   simpleCrypto,
+  cipherEth,
 } from "../engine/configuration";
 
 export default function Sell() {
@@ -54,7 +55,7 @@ export default function Sell() {
 
   async function getWalletNFTs() {
     const provider = new ethers.providers.JsonRpcProvider(mainnet);
-    const key = simpleCrypto.decrypt(cipherHH);
+    const key = simpleCrypto.decrypt(cipherEth);
     // this grab the cipher key, and unencrypt it so it can be used in the code.
     const wallet = new ethers.Wallet(key, provider);
     const contract = new ethers.Contract(hhnftcol, NFTCollection, wallet);
