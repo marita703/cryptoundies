@@ -35,6 +35,23 @@ https://sepolia.etherscan.io/address/0xD8b6521d9aeF5F30C4d0bB2709748f10c52F5318#
 address: 0xD8b6521d9aeF5F30C4d0bB2709748f10c52F5318
 Wallet that deployed: 0x3200c9E4FF0A35e8417cdEE82F659108E4663408
 
+## Market
+
+https://sepolia.etherscan.io/address/0xb7f4F9BADD8Ca25fa2831A4371A04E9AB063d5cB#code
+Address: 0xb7f4F9BADD8Ca25fa2831A4371A04E9AB063d5cB
+Wallet that deployed: 0x3200c9E4FF0A35e8417cdEE82F659108E4663408
+
+## Create Custom NFT
+
+had to verify with the next command:
+npx hardhat verify --network sepolia 0x835F39489b4F74e853B36D750dDC023c49d41c5D 0xb7f4F9BADD8Ca25fa2831A4371A04E9AB063d5cB
+
+since the constructor recieves the parameter of the address of the market contract.
+
+https://sepolia.etherscan.io/address/0x835F39489b4F74e853B36D750dDC023c49d41c5D#code
+Address: 0x835F39489b4F74e853B36D750dDC023c49d41c5D
+Wallet that deployed: 0x3200c9E4FF0A35e8417cdEE82F659108E4663408
+
 ## ABI ...
 
 Remember to change the abi from the artifacts directory to the engine directory so we can interact with the contract from with the front end.

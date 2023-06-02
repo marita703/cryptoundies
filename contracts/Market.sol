@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: MIT LICENSE
 
 
-pragma solidity ^0.8.4;
+pragma solidity ^0.8.18;
 
 import "@openzeppelin/contracts/utils/Counters.sol";
 import "@openzeppelin/contracts/security/ReentrancyGuard.sol";
