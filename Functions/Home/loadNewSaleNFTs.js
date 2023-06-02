@@ -1,6 +1,7 @@
 import { ethers } from "ethers";
 import axios from "axios";
-import Market from "../Engine/Market.json";
+import NFT from "@/Engine/CreateCustomNFT.json";
+import Market from "@/Engine/Market.json";
 import { hhnft, hhmarket, mainnet } from "@/Engine/configuration";
 import { simpleCrypto, cipherEth } from "@/Engine/configuration";
 import "sf-font";

@@ -1,6 +1,6 @@
 import { ethers } from "ethers";
 import Web3Modal from "web3modal";
-import Market from "../Engine/Market.json";
+import Market from "@/Engine/Market.json";
 import { hhnft, hhmarket } from "@/Engine/configuration";
 
 import "sf-font";

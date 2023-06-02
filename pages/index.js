@@ -30,6 +30,8 @@ import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
 import Image from "next/image";
 import { loadNewSaleNFTs } from "@/Functions/Home/loadNewSaleNFTs";
+import { buyNewNft } from "@/Functions/Home/buyNewNft";
+import { loadHardHatResell } from "@/Functions/Home/loadHardHatResell";
 
 export default function Home() {
   const [hhlist, hhResellNfts] = useState([]);
@@ -38,7 +40,7 @@ export default function Home() {
   //here we are going to store the nfts that someone created for sale.
 
   useEffect(() => {
-    loadHardHatResell();
+    loadHardHatResell(hhResellNfts);
     loadNewSaleNFTs(hhSetNfts);
   }, [hhResellNfts, hhSetNfts]);
 
@@ -47,73 +49,6 @@ export default function Home() {
     confetti();
   };
   const router = useRouter();
-
-  async function loadHardHatResell() {
-    const provider = new ethers.providers.JsonRpcProvider(mainnet);
-    const key = simpleCrypto.decrypt(cipherEth);
-    const wallet = new ethers.Wallet(key, provider);
-    // this is the nftsmartcontract
-    const contract = new ethers.Contract(hhnftcol, NFTCollection, wallet);
-    // this is the market place contract
-    const market = new ethers.Contract(hhresell, Resell, wallet);
-    const itemArray = [];
-    contract.totalSupply().then((result) => {
-      for (let i = 0; i < result; i++) {
-        var token = i + 1;
-        var owner = contract.ownerOf(token);
-        var getOwner = Promise.resolve(owner);
-        getOwner.then((address) => {
-          if (address == hhresell) {
-            const rawUri = contract.tokenURI(token);
-            const Uri = Promise.resolve(rawUri);
-            const getUri = Uri.then((value) => {
-              let str = value;
-              let cleanUri = str.replace("ipfs://", "https://ipfs.io/ipfs/");
-              console.log(cleanUri);
-              let metadata = axios.get(cleanUri).catch(function (error) {
-                console.log(error.toJSON());
-              });
-              return metadata;
-            });
-            getUri.then((value) => {
-              let rawImg = value.data.image;
-              var name = value.data.name;
-              var desc = value.data.description;
-              let image = rawImg.replace("ipfs://", "https://ipfs.io/ipfs/");
-              const price = market.getPrice(token);
-              Promise.resolve(price).then((_hex) => {
-                var salePrice = Number(_hex);
-                var txPrice = salePrice.toString();
-                Promise.resolve(owner).then((value) => {
-                  let ownerW = value;
-                  let outPrice = ethers.utils.formatUnits(
-                    salePrice.toString(),
-                    "ether"
-                  );
-                  let meta = {
-                    name: name,
-                    img: image,
-                    cost: txPrice,
-                    val: outPrice,
-                    tokenId: token,
-                    wallet: ownerW,
-                    desc,
-                  };
-                  console.log(meta);
-                  //this will store all of these in the array
-                  itemArray.push(meta);
-                });
-              });
-            });
-          }
-        });
-      }
-    });
-
-    //hold on for 3 seconds and display anything
-    await new Promise((r) => setTimeout(r, 3000));
-    hhResellNfts(itemArray);
-  }
 
   // this is from next ui ...
   const responsive = {
@@ -263,6 +198,81 @@ export default function Home() {
         </Grid.Container>
       </Container>
       <Spacer></Spacer>
+
+      <Spacer></Spacer>
+      <Container sm>
+        <Row css={{ marginTop: "$3", marginBottom: "$3" }}>
+          <Text h3>Latest NFTs on</Text>
+          <Image
+            src="/"
+            style={{ width: "190px", height: "45px", marginLeft: "4px" }}
+            width="190"
+            height="45"
+            alt="ethlogo"
+          />
+        </Row>
+        <Grid.Container gap={1} justify="flex-start">
+          {hhnfts.slice(0, 4).map((nft, i) => (
+            <Grid xs={3} key={i}>
+              <Card
+                style={{
+                  marginRight: "3px",
+                  boxShadow: "1px 1px 10px #ffffff",
+                }}
+                variant="bordered"
+                key={i}
+              >
+                <Text
+                  style={{
+                    color: "white",
+                    fontWeight: "bold",
+                    fontFamily: "SF Pro Display",
+                    fontWeight: "200",
+                    fontSize: "20px",
+                    marginLeft: "3px",
+                  }}
+                >
+                  {nft.name}
+                </Text>
+                <Card.Body css={{ p: 0 }}>
+                  <Card.Image
+                    style={{
+                      maxWidth: "150px",
+                      maxHeight: "150px",
+                      borderRadius: "6%",
+                    }}
+                    src={nft.image}
+                  />
+                </Card.Body>
+                <Card.Footer css={{ justifyItems: "flex-start" }}>
+                  <Row wrap="wrap" justify="space-between" align="center">
+                    <Text wrap="wrap">{nft.description}</Text>
+                    <Text style={{ fontSize: "30px" }}>
+                      {nft.price}
+                      <Image
+                        src="/"
+                        style={{
+                          marginTop: "4px",
+                        }}
+                        width="60px"
+                        height="25px"
+                        alt="another logo"
+                      />
+                    </Text>
+                    <Button
+                      color="gradient"
+                      style={{ fontSize: "20px" }}
+                      onClick={() => handleConfetti(buyNewNft(nft))}
+                    >
+                      Buy
+                    </Button>
+                  </Row>
+                </Card.Footer>
+              </Card>
+            </Grid>
+          ))}
+        </Grid.Container>
+      </Container>
     </div>
   );
 }
