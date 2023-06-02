@@ -22,7 +22,6 @@ import {
   hhresell,
   hhnftcol,
   mainnet,
-  cipherHH,
   simpleCrypto,
   cipherEth,
 } from "../engine/configuration";
@@ -124,13 +123,12 @@ export default function Sell() {
       <Container sm>
         <Row>
           <Col>
-            <Text h4>
-              NFTs in Wallet
-              <Text h5 css={{ color: "#39FF14" }}>
-                {" "}
-                {user}
-              </Text>
+            <Text h4>NFTs in Wallet</Text>
+            <Text h5 css={{ color: "#39FF14" }}>
+              {" "}
+              {user}
             </Text>
+
             <Row>
               <Button
                 size="sm"
@@ -208,60 +206,58 @@ export default function Sell() {
               }
               return (
                 <Grid key={i}>
-                  <a>
-                    <Card
-                      isHoverable
-                      css={{ mw: "200px", marginRight: "$1" }}
-                      variant="bordered"
-                    >
-                      <Card.Image src={nft.img} />
-                      <Card.Body sm key={i}>
-                        <h3
-                          style={{
-                            color: "#9D00FF",
-                            fontFamily: "SF Pro Display",
-                          }}
-                        >
-                          Owned by You
-                        </h3>
-                        <Text h5>
-                          {nft.name} Token-{nft.tokenId}
-                        </Text>
-                        <Text>{nft.desc}</Text>
-                        {/* in this input puts the price of relist price that comes from the resale price */}
-                        <Input
-                          size="sm"
-                          css={{
-                            marginTop: "$2",
-                            maxWidth: "120px",
-                            marginBottom: "$2",
-                            border: "$blue500",
-                          }}
-                          style={{
-                            color: "black",
-                            fontFamily: "SF Pro Display",
-                            fontWeight: "bolder",
-                            fontSize: "15px",
-                          }}
-                          placeholder="Set your price"
-                          onChange={(e) =>
-                            updateresalePrice({
-                              ...resalePrice,
-                              price: e.target.value,
-                            })
-                          }
-                        />
-                        <Button
-                          size="sm"
-                          color="gradient"
-                          onPress={executeRelist}
-                          style={{ fontSize: "20px" }}
-                        >
-                          Relist for Sale
-                        </Button>
-                      </Card.Body>
-                    </Card>
-                  </a>
+                  <Card
+                    isHoverable
+                    css={{ mw: "200px", marginRight: "$1" }}
+                    variant="bordered"
+                  >
+                    <Card.Image src={nft.img} />
+                    <Card.Body sm key={i}>
+                      <h3
+                        style={{
+                          color: "#9D00FF",
+                          fontFamily: "SF Pro Display",
+                        }}
+                      >
+                        Owned by You
+                      </h3>
+                      <Text h5>
+                        {nft.name} Token-{nft.tokenId}
+                      </Text>
+                      <Text>{nft.desc}</Text>
+                      {/* in this input puts the price of relist price that comes from the resale price */}
+                      <Input
+                        size="sm"
+                        css={{
+                          marginTop: "$2",
+                          maxWidth: "120px",
+                          marginBottom: "$2",
+                          border: "$blue500",
+                        }}
+                        style={{
+                          color: "black",
+                          fontFamily: "SF Pro Display",
+                          fontWeight: "bolder",
+                          fontSize: "15px",
+                        }}
+                        placeholder="Set your price"
+                        onChange={(e) =>
+                          updateresalePrice({
+                            ...resalePrice,
+                            price: e.target.value,
+                          })
+                        }
+                      />
+                      <Button
+                        size="sm"
+                        color="gradient"
+                        onPress={executeRelist}
+                        style={{ fontSize: "20px" }}
+                      >
+                        Relist for Sale
+                      </Button>
+                    </Card.Body>
+                  </Card>
                 </Grid>
               );
             }

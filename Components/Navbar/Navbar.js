@@ -33,18 +33,13 @@ function Navbar() {
                   style={{
                     background: "#00000070",
                     boxShadow: "0px 0px 4px #ffffff",
+                    fontFamily: "SF Pro Display",
+                    fontWeight: "500",
+                    color: "white",
+                    fontSize: "20px",
                   }}
                 >
-                  <a
-                    style={{
-                      fontFamily: "SF Pro Display",
-                      fontWeight: "500",
-                      color: "white",
-                      fontSize: "20px",
-                    }}
-                  >
-                    {button.name}
-                  </a>
+                  {button.name}
                 </Button>
               </Link>
             </Col>

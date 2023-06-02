@@ -22,7 +22,9 @@ contract NFTCollectionFromNet2Dev is ERC721Enumerable, Ownable {
     return "ipfs://QmUNLLsPACCz1vLxQVkXqqLX5R1X345qqfHbsf67hvA3Nn/";
 
     //the one for our nft that I switched manually in the contract already deploye is:
-    // ipfs://QmTA247gtUBggyywHBeps46fNEFDcY4KaQaQtHJkdd2nzY
+    // ipfs://QmTA247gtUBggyywHBeps46fNEFDcY4KaQaQtHJkdd2nzY/
+
+    //you have to put the fucking last slash at the end :( 
 
     }
     
