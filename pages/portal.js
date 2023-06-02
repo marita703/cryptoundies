@@ -4,6 +4,7 @@ import Web3Modal from "web3modal";
 import { useRouter } from "next/router";
 import NFTMarketResell from "../engine/NFTMarketResell.json";
 import NFTCollection from "../engine/NFTCollection.json";
+import CreateCustomNFT from "../Engine/CreateCustomNFT.json";
 import {
   Card,
   Button,
@@ -18,13 +19,10 @@ import {
 import axios from "axios";
 import "sf-font";
 import Web3 from "web3";
-import {
-  hhresell,
-  hhnftcol,
-  mainnet,
-  simpleCrypto,
-  cipherEth,
-} from "../engine/configuration";
+import { hhresell, hhnftcol } from "../engine/configuration";
+import { getCreatedNFTs } from "@/Functions/Portal/getCreatedNfts";
+import { getWalletNFTs } from "@/Functions/Portal/getWalletNfts";
+import WalletComponent from "@/Components/WalletComponent/WalletComponent";
 
 export default function Sell() {
   //this is the wallet that is conected in metamask...
@@ -34,10 +32,14 @@ export default function Sell() {
   //with this I can build the nft map
   const [nfts, setNfts] = useState([]);
   const [loadingState, setLoadingState] = useState("not-loaded");
+  //Here we are going to store the created NFTs
+  const [created, getCreated] = useState([]);
+
   useEffect(() => {
     connectUser();
-    getWalletNFTs();
-  }, [setNfts, getUser]);
+    getWalletNFTs(setNfts, setLoadingState);
+    getCreatedNFTs();
+  }, [setNfts, getUser, getCreated]);
   const router = useRouter();
 
   async function connectUser() {
@@ -52,61 +54,6 @@ export default function Sell() {
     getUser(account);
   }
 
-  async function getWalletNFTs() {
-    const provider = new ethers.providers.JsonRpcProvider(mainnet);
-    const key = simpleCrypto.decrypt(cipherEth);
-    // this grab the cipher key, and unencrypt it so it can be used in the code.
-    const wallet = new ethers.Wallet(key, provider);
-    const contract = new ethers.Contract(hhnftcol, NFTCollection, wallet);
-    const itemArray = [];
-    contract.totalSupply().then((result) => {
-      let totalSup = parseInt(result, 16);
-      for (let i = 0; i < totalSup; i++) {
-        var token = i + 1;
-        const owner = contract.ownerOf(token).catch(function (error) {
-          console.log("tokens filtered");
-        });
-        const rawUri = contract.tokenURI(token).catch(function (error) {
-          console.log("tokens filtered");
-        });
-        const Uri = Promise.resolve(rawUri);
-        const getUri = Uri.then((value) => {
-          let str = value;
-          let cleanUri = str.replace("ipfs://", "https://ipfs.io/ipfs/");
-          //   this converts the ipfs jason data into https and then we can render the images of the nfts.
-          console.log(cleanUri);
-          let metadata = axios.get(cleanUri).catch(function (error) {
-            console.log(error.toJSON());
-          });
-          return metadata;
-        });
-        getUri.then((value) => {
-          // here we start using AXIOS
-          let rawImg = value.data.image;
-          var name = value.data.name;
-          var desc = value.data.description;
-          let image = rawImg.replace("ipfs://", "https://ipfs.io/ipfs/");
-          Promise.resolve(owner).then((value) => {
-            let ownerW = value;
-            // Here we start creating the metadata object for each NFT
-            let meta = {
-              name: name,
-              img: image,
-              tokenId: token,
-              wallet: ownerW,
-              desc,
-            };
-            console.log(meta);
-            itemArray.push(meta);
-          });
-        });
-      }
-    });
-    await new Promise((r) => setTimeout(r, 3000));
-    // here we are givin time to the code to render the images...
-    setNfts(itemArray);
-    setLoadingState("loaded");
-  }
   if (loadingState === "loaded" && !nfts.length)
     return (
       <Container sm>
@@ -121,32 +68,7 @@ export default function Sell() {
   return (
     <div>
       <Container sm>
-        <Row>
-          <Col>
-            <Text h4>NFTs in Wallet</Text>
-            <Text h5 css={{ color: "#39FF14" }}>
-              {" "}
-              {user}
-            </Text>
-
-            <Row>
-              <Button
-                size="sm"
-                onPress={connectUser}
-                css={{ marginRight: "$2", marginBottom: "$2" }}
-              >
-                Refresh Wallet
-              </Button>
-              <Button
-                size="sm"
-                onPress={getWalletNFTs}
-                css={{ marginRight: "$2", marginBottom: "$2" }}
-              >
-                Refresh NFTs
-              </Button>
-            </Row>
-          </Col>
-        </Row>
+        <WalletComponent />
         <Grid.Container gap={3}>
           {/* here we are goint to start rendering the NFTs depending on the wallet that is conected */}
           {nfts.map((nft, i) => {
