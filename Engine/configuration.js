@@ -40,7 +40,7 @@ export const client = ipfsHttpClient("https://ipfs.infura.io:5001/api/v0");
 HardHat Testnet
 */
 
-export var hhresell = "0x9AA77a01931c9994B66b7767EF7023d1151e9033";
+export var hhresell = "0x68bdbfcf956f4d316304b1759567c08cd4151b12";
 // this is the smart contract for resale
 export var hhnftcol = "0xd153Ba2481A9249580b42C058eE81055F17A74F5";
 // this is the smart contract for Creating the NFTs.

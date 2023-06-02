@@ -26,13 +26,13 @@ Wallet that deployed: 0x3200c9E4FF0A35e8417cdEE82F659108E4663408
 
 Here we had to modify the deploy script because this contract recieves an NFT as parameter.. so we had to create a const that is called nft, and give the address of the nft contract that is already deployed. at the moment of verify the contract we had to give the next comand:
 
-npx hardhat verify --network sepolia 0xD8b6521d9aeF5F30C4d0bB2709748f10c52F5318 0x07Ba06b359B2F369c7CF3fA0FDdbb2F2fdb102C0
+npx hardhat verify --network sepolia 0x68bdbfcf956f4d316304b1759567c08cd4151b12 0xd153Ba2481A9249580b42C058eE81055F17A74F5
 
 the first address is the one of the contract to verify , and the second address is the one of the nft. ß
 
-https://sepolia.etherscan.io/address/0xD8b6521d9aeF5F30C4d0bB2709748f10c52F5318#code
+https://sepolia.etherscan.io/address/0x68bdbfcf956f4d316304b1759567c08cd4151b12#code
 
-address: 0x9AA77a01931c9994B66b7767EF7023d1151e9033
+address: 0x68bdbfcf956f4d316304b1759567c08cd4151b12
 Wallet that deployed: 0x3200c9E4FF0A35e8417cdEE82F659108E4663408
 
 ## Market
